@@ -1,0 +1,53 @@
+EXTRA CREDIT: I will be participating in the tournament
+
+This program allows a user to play battleship with either another user or a computer player - or allows the user
+to watch two computer players play.
+
+I implemented 6 classes to create this program. 4 of these 6 classes implement the given interfaces.
+
+1) BattleshipGame: This class contains the methods for executing a battleship game. This class
+implements the game interface and consequently all the methods that come with it.Along with these methods,
+I added methods of my own that include displaying player's boards and checking for overlaps.
+
+Design Decision: I decided to test for ship overlapping in the game class as I saw it best to have one 
+over-arching test here. It can be argued that this test could have been in the player class,
+as Professor Sheth (Swap) said, the game class can't trust the player class to return a valid location
+and would thus have to conduct the test anyway. I saw it fit to have the test once in the game class
+since it is makes unbiased checks. Also a lot of the instance variables that deal with the ships 
+and ship locations are found in this class and seems more logical to implement the test here.
+That being said, my player class does do an initial screening of input by checking for out of bounds 
+input. The one downfall is that when running the tournament, since overlapping is in the game class,
+Swap's game class will have to prompt my AI for new input should an overlap occur rather that the AI
+checking input itself and providing a new one if necessary. But this is not a huge pitfall. Overall,
+I wanted to avoid the duplication and make my program cleaner by having this tedious check in one class.
+
+The program also displays each player's boards at the end of each turn. The board contains the status of the
+player's ships at the end of each turn. This is done using a 2D array of Strings.
+
+2)Ship Class: This is a class I created to characterize an individual ship by its size and location coordinates
+and also have a method called shipFate() that compares a player target to ship location coordinates
+and returns a consequent result: miss, hit or sunk.
+
+Design Decision: I thought this class was necessary as it allows for easy access to a ships information
+and easy comparison for returning the result of a player's target.
+
+3) ComputerPlayer Class: This is my AI class that will be entering the tournament. My strategy, which 
+I thought of on my own, is to fill an array list with coordinates corresponding to a checkerboard configuration
+and picking a coordinate from this list randomly till a ship is hit. Once a ship is hit, the next four
+possible ship locations (two vertical, two horizontal) are added to the front of the array list and these 
+elements are taken as next targets for the AI. I have also implemented a counter and boolean shipPursuit.
+The counter keeps track of the number of hits and is basically for letting the AI pursue a ship till it is
+sunk. For example, if counter>1, then the AI can consequently figure out the direction of the ship
+and only fire there till it is sunk (Note we account for horizontal because the AI by default follows vertical ships)
+The boolean shipPursuit is to get the AI out of its default mode of selecting random targets and instead,
+ coordinates at the front of the array list.
+
+4)The rest of the classes are standard and implement the methods that the interfaces provide.
+I have handled possible errors by putting certain parts of code in a try-catch and 
+also loops to account for a malicious user.
+
+Note about overlap method: The code is accounting for four possible cases within which 
+there are two possible situations. The cases are if the previous ship is horizontal or vertical
+and yours is horizontal or vertical. And the situations are if the left most coordinate 
+falls within the boundaries of the previous ship or if its full extension falls within those 
+boundaries.
